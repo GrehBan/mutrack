@@ -1,14 +1,14 @@
 from typing import TypeVar, cast, overload, Literal
 
-from src.mutrack.internal.attributes import PARENTS_STORE, STATE_STORE, PENDING_CHANGE_STORE, CHANGE_SUPPRESS_LEVEL_STORE
-from src.mutrack.internal.object_access import raw_getattr, raw_setattr
-from src.mutrack.internal.sentinel import MISSING, _Missing
-from src.mutrack.tracking.trackable.protocols import (
+from mutrack.internal.attributes import PARENTS_STORE, STATE_STORE, PENDING_CHANGE_STORE, CHANGE_SUPPRESS_LEVEL_STORE
+from mutrack.internal.object_access import raw_getattr, raw_setattr
+from mutrack.internal.sentinel import MISSING, _Missing
+from mutrack.tracking.trackable.protocols import (
     ITrackable,
     ParentsDictionary,
     TrackableType
 )
-from src.mutrack.tracking.state.protocols import IState
+from mutrack.tracking.state.protocols import IState
 
 
 T = TypeVar("T")

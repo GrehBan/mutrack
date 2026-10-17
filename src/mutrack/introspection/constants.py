@@ -2,14 +2,15 @@ from __future__ import annotations
 
 from typing import Final
 
-from src.mutrack.internal.attributes import (
+from mutrack.internal.attributes import (
     PARENTS,
     PARENTS_STORE,
     STATE,
     STATE_STORE,
     PENDING_CHANGE_STORE,
     MAX_DEPTH_LIMIT,
-    CHANGE_SUPPRESS_LEVEL_STORE
+    CHANGE_SUPPRESS_LEVEL_STORE,
+    PARENTS_LOCK_STORE
 )
 
 
@@ -54,7 +55,8 @@ LIB_ATTRS: Final[frozenset[str]] = frozenset(
         STATE_STORE,
         CHANGE_SUPPRESS_LEVEL_STORE,
         PENDING_CHANGE_STORE,
-        MAX_DEPTH_LIMIT
+        MAX_DEPTH_LIMIT,
+        PARENTS_LOCK_STORE
     }
 )
 

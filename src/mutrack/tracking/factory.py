@@ -1,15 +1,15 @@
 from weakref import WeakKeyDictionary
 
-from src.mutrack.tracking.state.protocols import IState
-from src.mutrack.tracking.state.state import MutableState
-from src.mutrack.tracking.access import get_parents, get_state
-from src.mutrack.internal.object_access import raw_setattr
-from src.mutrack.tracking.trackable.protocols import (
+from mutrack.tracking.state.protocols import IState
+from mutrack.tracking.state.state import MutableState
+from mutrack.tracking.access import get_parents, get_state
+from mutrack.internal.object_access import raw_setattr
+from mutrack.tracking.trackable.protocols import (
     ITrackable,
     ParentsDictionary,
     TrackableType,
 )
-from src.mutrack.internal.attributes import PARENTS_STORE, STATE_STORE
+from mutrack.internal.attributes import PARENTS_STORE, STATE_STORE
 
 
 def create_parents() -> ParentsDictionary[ITrackable]:
@@ -27,7 +27,7 @@ def create_state(
 def get_or_create_parents(obj: ITrackable) -> ParentsDictionary[ITrackable]:
     parents: ParentsDictionary[ITrackable] | None = get_parents(obj, None)
     if parents is None:
-        parents = ParentsDictionary()
+        parents = create_parents()
         raw_setattr(obj, PARENTS_STORE, parents)
     return parents
 
@@ -38,7 +38,7 @@ def get_or_create_state(
 ) -> IState[TrackableType]:
     state = get_state(obj, None)
     if state is None:
-        state = MutableState(obj)
+        state = create_state(obj)
         raw_setattr(obj, STATE_STORE, state)
     return state
 

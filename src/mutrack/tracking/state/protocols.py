@@ -1,6 +1,6 @@
 from typing import Protocol, runtime_checkable
-from src.mutrack.tracking.trackable.protocols import TrackableType_co, ITrackable
-from src.mutrack.tracking.types import Key
+from mutrack.tracking.trackable.protocols import TrackableType_co, ITrackable
+from mutrack.tracking.types import Key
 
 
 @runtime_checkable

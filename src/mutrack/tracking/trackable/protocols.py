@@ -1,11 +1,11 @@
 from weakref import WeakKeyDictionary
 
 from typing import Protocol, runtime_checkable, TypeVar, TypeAlias, TYPE_CHECKING, ClassVar
-from src.mutrack.tracking.types import Key
-from src.mutrack.tracking.constants import DEFAULT_MAX_DEPTH_LIMIT
+from mutrack.tracking.types import Key
+from mutrack.tracking.constants import DEFAULT_MAX_DEPTH_LIMIT
 
 if TYPE_CHECKING:
-    from src.mutrack.tracking.state.protocols import IState
+    from mutrack.tracking.state.protocols import IState
 
 TrackableType = TypeVar("TrackableType", bound="ITrackable")
 TrackableType_co = TypeVar("TrackableType_co", bound="ITrackable", covariant=True)
@@ -22,7 +22,7 @@ class ITrackable(Protocol):
     """Interface for trackable objects."""
 
     @property
-    def _parents(self) -> ParentsDictionary:
+    def _tracking_parents(self) -> ParentsDictionary:
         """Retrieve or initialize the parents WeakKeyDictionary.
 
         Returns:

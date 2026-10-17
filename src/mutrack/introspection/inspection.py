@@ -1,4 +1,4 @@
-from src.mutrack.introspection.constants import SKIP_ATTRS, STARTSWITH_SKIP_PREFIXES
+from mutrack.introspection.constants import SKIP_ATTRS, STARTSWITH_SKIP_PREFIXES
 
 
 def matches_attribute_rules(
