@@ -6,15 +6,91 @@ readme = "README.md"
 authors = [
     { name = "GrehBan", email = "57055685+GrehBan@users.noreply.github.com" }
 ]
-requires-python = ">=3.15"
+requires-python = ">=3.11"
 dependencies = [
     "sqlalchemy>=2.1.5",
     "typing-extensions>=4.16.0",
 ]
 
-[project.scripts]
-mutrack = "mutrack:main"
+[project.optional-dependencies]
+pydantic = ["pydantic>=1.10.17,<3"]
+attrs = ["attrs>=23.2"]
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "attrs>=23.2",
+    "pydantic>=2.14,<3",
+    "pytest>=9.1.1",
+]
+lint = [
+    "mypy>=2.4.0",
+    "ruff>=0.17.1",
+]
+
+[tool.ruff]
+line-length = 79
+src = ["src", "tests"]
+target-version = "py311"
+exclude = [
+    ".git",
+    "build",
+    "dist",
+    "venv",
+    ".venv",
+    "docs",
+    "dev",
+    "scripts",
+    "*.egg-info",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "C4",
+    "Q",
+    "RET",
+    "I",
+    "UP",
+    "T10",
+]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["mutrack"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501", "S101"]
+"src/mutrack/__init__.py" = ["F401"]
+
+[tool.mypy]
+files = ["src"]
+python_version = "3.11"
+show_error_codes = true
+show_error_context = true
+pretty = true
+ignore_missing_imports = false
+warn_unused_configs = true
+disallow_subclassing_any = true
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = false
+warn_return_any = true
+follow_imports_for_stubs = true
+namespace_packages = true
+show_absolute_path = true

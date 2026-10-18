@@ -1,13 +1,13 @@
+"""Expose model mutation tracking through SQLAlchemy Mutable."""
+
 from __future__ import annotations
 
 from sqlalchemy.ext.mutable import Mutable
 
-from mutrack.tracking.trackable.trackable import Trackable
+from mutrack.adapters.sqlalchemy.base import _SQLAlchemyTrackableBase
 
 
-class SQLAlchemyTrackable(Trackable, Mutable):
-    """Bridge between mutrack tracking and SQLAlchemy Mutable."""
+class SQLAlchemyTrackable(_SQLAlchemyTrackableBase, Mutable):
+    """Expose the mutation graph through SQLAlchemy Mutable integration."""
 
-    def _emit_change(self) -> None:
-        Trackable._emit_change(self)
-        Mutable.changed(self)
+    pass

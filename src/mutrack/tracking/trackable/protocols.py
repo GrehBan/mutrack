@@ -1,28 +1,46 @@
+"""Define Trackable contracts and check structural support per instance."""
+
+from typing import (
+    TYPE_CHECKING,
+    ClassVar,
+    Protocol,
+    TypeAlias,
+    TypeGuard,
+    TypeVar,
+    runtime_checkable,
+)
 from weakref import WeakKeyDictionary
 
-from typing import Protocol, runtime_checkable, TypeVar, TypeAlias, TYPE_CHECKING, ClassVar
 from mutrack.tracking.types import Key
-from mutrack.tracking.constants import DEFAULT_MAX_DEPTH_LIMIT
 
 if TYPE_CHECKING:
     from mutrack.tracking.state.protocols import IState
 
 TrackableType = TypeVar("TrackableType", bound="ITrackable")
-TrackableType_co = TypeVar("TrackableType_co", bound="ITrackable", covariant=True)
+TrackableType_co = TypeVar(
+    "TrackableType_co",
+    bound="ITrackable",
+    covariant=True,
+)
 ParentsDictionary: TypeAlias = WeakKeyDictionary[
     "IState[TrackableType]",
-    Key,
+    set[Key],
 ]
 
 
 @runtime_checkable
 class ITrackable(Protocol):
-    _max_depth_limit: ClassVar[int] = DEFAULT_MAX_DEPTH_LIMIT
+    """Define tracked objects and their parent notifications.
 
-    """Interface for trackable objects."""
+    Attributes:
+        _max_depth_limit: Default nesting limit used when callers omit
+            max_depth.
+    """
+
+    _max_depth_limit: ClassVar[int]
 
     @property
-    def _tracking_parents(self) -> ParentsDictionary:
+    def _tracking_parents(self) -> "ParentsDictionary[ITrackable]":
         """Retrieve or initialize the parents WeakKeyDictionary.
 
         Returns:
@@ -44,3 +62,18 @@ class ITrackable(Protocol):
     def changed(self) -> None:
         """Notify parents using the library's safe propagation logic."""
         ...
+
+
+def is_trackable(value: object, /) -> TypeGuard[ITrackable]:
+    """Check Trackable support without caching instance-specific members.
+
+    Structural implementations may install protocol members on individual
+    instances, so objects of the same type can have different support.
+
+    Args:
+        value: Object checked for the Trackable protocol.
+
+    Returns:
+        True when the value implements the Trackable protocol.
+    """
+    return isinstance(value, ITrackable)

@@ -1,3 +1,5 @@
+"""Batch change notifications using per-object suppression state."""
+
 from __future__ import annotations
 
 from collections.abc import Generator
@@ -16,6 +18,14 @@ def mark_change_or_defer(
     obj: ITrackable,
     /,
 ) -> bool:
+    """Emit a change or defer it while suppression is active.
+
+    Args:
+        obj: Object whose stored state or fields are accessed.
+
+    Returns:
+        True when the caller should emit now; False when deferred.
+    """
     if get_change_suppress_level(obj) > 0:
         set_pending_change(obj, True)
         return False
@@ -28,6 +38,15 @@ def batch_changes(
     obj: ITrackable,
     /,
 ) -> Generator[None]:
+    """Emit one notification when the outermost batch exits.
+
+    Args:
+        obj: Object whose stored state or fields are accessed.
+
+    Yields:
+        Control to the caller while change notifications are
+        suppressed.
+    """
     level = get_change_suppress_level(obj)
 
     set_change_suppress_level(

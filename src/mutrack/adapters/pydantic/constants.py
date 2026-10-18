@@ -1,7 +1,8 @@
+"""Define reserved attribute names for pydantic integration."""
+
 from __future__ import annotations
 
 from typing import Final
-
 
 PYDANTIC_SKIP_PREFIXES: Final[tuple[str, ...]] = (
     "__pydantic_",
@@ -10,7 +11,6 @@ PYDANTIC_SKIP_PREFIXES: Final[tuple[str, ...]] = (
 
 PYDANTIC_ATTRS: Final[frozenset[str]] = frozenset(
     {
-        # Pydantic v2
         "model_config",
         "model_fields",
         "model_computed_fields",
@@ -26,13 +26,9 @@ PYDANTIC_ATTRS: Final[frozenset[str]] = frozenset(
         "model_validate_json",
         "model_validate_strings",
         "model_rebuild",
-
-        # Pydantic v2 internals
         "__pydantic_private__",
         "__pydantic_extra__",
         "__pydantic_fields_set__",
-
-        # Pydantic v1
         "__fields__",
         "__fields_set__",
         "__config__",
@@ -44,8 +40,6 @@ PYDANTIC_ATTRS: Final[frozenset[str]] = frozenset(
         "__custom_root_type__",
         "__private_attributes__",
         "__values__",
-
-        # Pydantic v1 public API
         "dict",
         "json",
         "copy",
@@ -63,7 +57,6 @@ PYDANTIC_ATTRS: Final[frozenset[str]] = frozenset(
 
 PYDANTIC_CLASS_ACCESS_ONLY: Final[frozenset[str]] = frozenset(
     {
-        # Pydantic v2
         "model_fields",
         "model_config",
         "model_computed_fields",
@@ -73,8 +66,6 @@ PYDANTIC_CLASS_ACCESS_ONLY: Final[frozenset[str]] = frozenset(
         "__pydantic_decorators__",
         "__pydantic_generic_metadata__",
         "__pydantic_parent_namespace__",
-
-        # Pydantic v1
         "__fields__",
         "__config__",
         "__validators__",
@@ -83,8 +74,6 @@ PYDANTIC_CLASS_ACCESS_ONLY: Final[frozenset[str]] = frozenset(
         "__schema_cache__",
         "__json_encoder__",
         "__custom_root_type__",
-
-        # Python-generated / framework-generated
         "__signature__",
     }
 )

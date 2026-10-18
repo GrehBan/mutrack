@@ -1,7 +1,8 @@
+"""Define reserved attribute names for dataclasses integration."""
+
 from __future__ import annotations
 
 from typing import Final
-
 
 DATACLASS_SKIP_PREFIXES: Final[tuple[str, ...]] = ()
 
